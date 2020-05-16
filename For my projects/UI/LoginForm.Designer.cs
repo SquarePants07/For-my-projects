@@ -77,7 +77,7 @@
             this.PasswordInput.Name = "PasswordInput";
             this.PasswordInput.Size = new System.Drawing.Size(178, 20);
             this.PasswordInput.TabIndex = 3;
-            this.PasswordInput.TextChanged += new System.EventHandler(this.PasswordInput_TextChanged);
+            this.PasswordInput.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PasswordInput_KeyPress);
             // 
             // PasswordInstruct
             // 

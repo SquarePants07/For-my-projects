@@ -45,6 +45,7 @@
             this.AddListUsers.TabIndex = 0;
             this.AddListUsers.Text = "Добавить список учеников";
             this.AddListUsers.UseVisualStyleBackColor = true;
+            this.AddListUsers.Click += new System.EventHandler(this.AddListUsers_Click);
             // 
             // DeleteListUsers
             // 
@@ -55,6 +56,7 @@
             this.DeleteListUsers.TabIndex = 1;
             this.DeleteListUsers.Text = "Удалить список учеников";
             this.DeleteListUsers.UseVisualStyleBackColor = true;
+            this.DeleteListUsers.Click += new System.EventHandler(this.DeleteListUsers_Click);
             // 
             // GetPasswords
             // 
