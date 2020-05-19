@@ -40,13 +40,13 @@ namespace For_my_projects
                 {
                     if (user.IsTeacher)
                     {
-                        TeacherForm teacherForm = new TeacherForm();
+                        TeacherForm teacherForm = new TeacherForm(user);
                         teacherForm.Show();
                         this.Hide();
                     }
                     else
                     {
-                        QuestionForm questionForm = new QuestionForm();
+                        QuestionForm questionForm = new QuestionForm(user);
                         questionForm.Show();
                         this.Hide();
                     }

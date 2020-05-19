@@ -6,18 +6,61 @@ using System.Threading.Tasks;
 
 namespace For_my_projects
 {
-    class User
+    public class User
     {
         int id;
         String name;
         bool isTeacher;
         int classId;
         int statusId;
+        int p;
+        int c;
 
         public bool IsTeacher
         {
             get {
                 return isTeacher;
+            }
+        }
+
+        public int ClassId {
+            get {
+                return classId;
+            }
+        }
+
+        public int Id
+        {
+            get
+            {
+                return id;
+            }
+        }
+
+        public int StatusId
+        {
+            get
+            {
+                return statusId;
+            }
+            set {
+                statusId = value;
+            }
+        }
+
+        public int P
+        {
+            get
+            {
+                return p;
+            }
+        }
+
+        public int C
+        {
+            get
+            {
+                return c;
             }
         }
 
@@ -30,6 +73,23 @@ namespace For_my_projects
                 this.isTeacher = true;
             this.classId = classId;
             this.statusId = statusId;
+            this.p = 0;
+            this.c = 0;
+        }
+
+        public override string ToString()
+        {
+            return name;
+        }
+
+        public void addP()
+        {
+            p++;
+        }
+
+        public void addC()
+        {
+            c++;
         }
     }
 }

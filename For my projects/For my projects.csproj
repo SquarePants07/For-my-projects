@@ -8,10 +8,11 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>For_my_projects</RootNamespace>
     <AssemblyName>For my projects</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -94,6 +95,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\DBWork.cs" />
+    <Compile Include="DataModel\Answer.cs" />
+    <Compile Include="DataModel\Question.cs" />
+    <Compile Include="DataModel\Status.cs" />
     <Compile Include="UI\ChooseClassForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -145,6 +149,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="UI\QuestionForm.resx">
       <DependentUpon>QuestionForm.cs</DependentUpon>

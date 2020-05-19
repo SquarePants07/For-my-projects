@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.Results = new System.Windows.Forms.ListView();
             this.CountUsers = new System.Windows.Forms.TextBox();
             this.Welfare = new System.Windows.Forms.TextBox();
             this.Reciprocity = new System.Windows.Forms.TextBox();
@@ -37,16 +36,11 @@
             this.CountUsersTest = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.listView1 = new System.Windows.Forms.ListView();
+            this.UserName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Passed = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
-            // 
-            // Results
-            // 
-            this.Results.HideSelection = false;
-            this.Results.Location = new System.Drawing.Point(355, 22);
-            this.Results.Name = "Results";
-            this.Results.Size = new System.Drawing.Size(482, 323);
-            this.Results.TabIndex = 0;
-            this.Results.UseCompatibleStateImageBehavior = false;
             // 
             // CountUsers
             // 
@@ -80,6 +74,7 @@
             this.Donloadresults.TabIndex = 4;
             this.Donloadresults.Text = "Скачать результаты";
             this.Donloadresults.UseVisualStyleBackColor = true;
+            this.Donloadresults.Click += new System.EventHandler(this.Donloadresults_Click);
             // 
             // TeacherCancelButton
             // 
@@ -90,6 +85,7 @@
             this.TeacherCancelButton.TabIndex = 5;
             this.TeacherCancelButton.Text = "Отмена";
             this.TeacherCancelButton.UseVisualStyleBackColor = true;
+            this.TeacherCancelButton.Click += new System.EventHandler(this.TeacherCancelButton_Click);
             // 
             // CountUsersTest
             // 
@@ -120,12 +116,42 @@
             this.label2.Text = "Количество взаимных выборов:";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
+            // listView1
+            // 
+            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.UserName,
+            this.Status,
+            this.Passed});
+            this.listView1.HideSelection = false;
+            this.listView1.Location = new System.Drawing.Point(368, 13);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(641, 332);
+            this.listView1.TabIndex = 9;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.Details;
+            // 
+            // UserName
+            // 
+            this.UserName.Text = "ФИО";
+            this.UserName.Width = 341;
+            // 
+            // Status
+            // 
+            this.Status.Text = "Статус";
+            this.Status.Width = 140;
+            // 
+            // Passed
+            // 
+            this.Passed.Text = "Пройден тест";
+            this.Passed.Width = 110;
+            // 
             // TeacherForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.TeacherCancelButton;
-            this.ClientSize = new System.Drawing.Size(862, 412);
+            this.ClientSize = new System.Drawing.Size(1021, 412);
+            this.Controls.Add(this.listView1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.CountUsersTest);
@@ -134,9 +160,8 @@
             this.Controls.Add(this.Reciprocity);
             this.Controls.Add(this.Welfare);
             this.Controls.Add(this.CountUsers);
-            this.Controls.Add(this.Results);
             this.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "TeacherForm";
             this.Text = "Режим(Учитель)";
             this.ResumeLayout(false);
@@ -145,8 +170,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ListView Results;
         private System.Windows.Forms.TextBox CountUsers;
         private System.Windows.Forms.TextBox Welfare;
         private System.Windows.Forms.TextBox Reciprocity;
@@ -155,5 +178,9 @@
         private System.Windows.Forms.Label CountUsersTest;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ColumnHeader UserName;
+        private System.Windows.Forms.ColumnHeader Status;
+        private System.Windows.Forms.ColumnHeader Passed;
     }
 }

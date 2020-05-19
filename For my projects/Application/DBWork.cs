@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using For_my_projects.DataModel;
 using MySql.Data.MySqlClient;
 
 namespace For_my_projects
@@ -20,9 +21,59 @@ namespace For_my_projects
                 "Data Source=127.0.0.1;" +
                 "Initial Catalog=psychologytest;" +
                 "User id=root;" +
-                "Password=89197174637;";
+                "Password=25011994;";
             connection.Open();
         }
+
+        public static Dictionary<User, List<Answer>> getAllResultsByTeacher(User currentUser)
+        {
+            Dictionary<User, List<Answer>> results = new Dictionary<User, List<Answer>>();
+            List<User> users = getClassmates(currentUser.ClassId);
+            foreach (User user in users) {
+                String query = "SELECT * FROM results WHERE idusers = " + user.Id + " ORDER BY idquestions";
+                MySqlCommand command = new MySqlCommand(query);
+                command.Connection = connection;
+                MySqlDataReader data = command.ExecuteReader();
+                if (data.HasRows)
+                {
+                    List<Answer> answers = new List<Answer>();
+                    while (data.Read())
+                    {
+                        List<Int32> questionAnswers = new List<Int32>();
+                        questionAnswers.Add(data.GetInt32(2));
+                        questionAnswers.Add(data.GetInt32(3));
+                        questionAnswers.Add(data.GetInt32(4));
+                        questionAnswers.Add(data.GetInt32(5));
+                        questionAnswers.Add(data.GetInt32(6));
+                        answers.Add(new Answer(data.GetInt32(0), data.GetInt32(1), questionAnswers));
+                    }
+                    data.Close(); 
+                    results.Add(user, answers);
+                }
+                else {
+                    data.Close();
+                    results.Add(user, new List<Answer>());
+                }
+            }
+            return results;
+        }
+
+        public static PupilGroup getPupilGroup(int classId)
+        {
+            PupilGroup pupilGroup = null;
+            String query = "SELECT * FROM classes WHERE idclasses = " + classId;
+            MySqlCommand command = new MySqlCommand(query);
+            command.Connection = connection;
+            MySqlDataReader data = command.ExecuteReader();
+            if (data.HasRows)
+            {
+                data.Read();
+                pupilGroup = new PupilGroup(data.GetInt32(0), data.GetString(1), data.GetInt32(2));
+            }
+            data.Close();
+            return pupilGroup;
+        }
+
         static public int loginUser(String password)
         {
             String query = "SELECT idUsers FROM users WHERE Password = " + password;
@@ -38,6 +89,7 @@ namespace For_my_projects
             data.Close();
             return userId;
         }
+
         static public User getUserDetails(int id)
         {
             String query = "SELECT idUsers, IsTeacher, Usersname, idstatus, idclasses FROM users WHERE idUsers = " + id;
@@ -57,6 +109,29 @@ namespace For_my_projects
             data.Close();
             return user;
 
+        }
+
+        public static List<User> getClassmates(int classId)
+        {
+            List<User> users = new List<User>();
+            String query = "SELECT idUsers, IsTeacher, Usersname, idstatus, idclasses FROM users WHERE idclasses = " + classId + " AND IsTeacher = 0 ORDER BY Usersname";
+            MySqlCommand command = new MySqlCommand(query);
+            command.Connection = connection;
+            MySqlDataReader data = command.ExecuteReader();
+            if (data.HasRows)
+            {
+                while (data.Read())
+                {
+                    int statusId = 0;
+                    if (!data.IsDBNull(3))
+                    {
+                        statusId = data.GetInt32(3);
+                    }
+                    users.Add(new User(data.GetInt32(0), data.GetInt32(1), data.GetString(2), statusId, data.GetInt32(4)));
+                }
+            }
+            data.Close();
+            return users;
         }
 
         public static void deleteUsersFromPupilGroup(int pupilGroupId) {
@@ -199,6 +274,68 @@ namespace For_my_projects
             }
             data.Close();
             return pupilGroups;
+        }
+
+        public static List<Question> getAllQuestions()
+        {
+            List<Question> questions = new List<Question>();
+            String query = "SELECT * FROM questions ORDER BY idquestions";
+            MySqlCommand command = new MySqlCommand(query);
+            command.Connection = connection;
+            MySqlDataReader data = command.ExecuteReader();
+            if (data.HasRows)
+            {
+                while (data.Read())
+                {
+                    questions.Add(new Question(data.GetInt32(0), data.GetString(1), data.GetByte(2)));
+                }
+            }
+            data.Close();
+            return questions;
+        }
+
+        public static void commitAnswers(List<Answer> answers)
+        {
+            foreach (Answer answer in answers) {
+                String query = "SELECT idusers FROM results WHERE idusers = " + answer.UserId + " AND idquestions = " + answer.QuestionId;
+                MySqlCommand command = new MySqlCommand(query);
+                command.Connection = connection;
+                MySqlDataReader data = command.ExecuteReader();
+
+                if (!data.HasRows)
+                {
+                    data.Close();
+                    query = "INSERT INTO results (idusers, idquestions, ans_1, ans_2, ans_3, ans_4, ans_5) VALUES(" + answer.UserId + ", " + answer.QuestionId + ", " + answer.getAnswerAt(0) + ", " + answer.getAnswerAt(1) + ", " + answer.getAnswerAt(2) + ", " + answer.getAnswerAt(3) + ", " + answer.getAnswerAt(4) + ")";
+                    MySqlCommand insertAnswerCommand = new MySqlCommand(query);
+                    insertAnswerCommand.Connection = connection;
+                    insertAnswerCommand.ExecuteNonQuery();
+                }
+                else {
+                    data.Close();
+                    query = "UPDATE results SET ans_1 = " + answer.getAnswerAt(0) + ", ans_2 = " + answer.getAnswerAt(1) + ", ans_3 = " + answer.getAnswerAt(2) + ", ans_4 = " + answer.getAnswerAt(3) + ", ans_5 = " + answer.getAnswerAt(4) + " WHERE idusers = " + answer.UserId + " AND idquestions = " + answer.QuestionId;
+                    MySqlCommand updateAnswerCommand = new MySqlCommand(query);
+                    updateAnswerCommand.Connection = connection;
+                    updateAnswerCommand.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static List<Status> getAllStatuses()
+        {
+            List<Status> statuses = new List<Status>();
+            String query = "SELECT * FROM statusdictionary ORDER BY idstatus";
+            MySqlCommand command = new MySqlCommand(query);
+            command.Connection = connection;
+            MySqlDataReader data = command.ExecuteReader();
+            if (data.HasRows)
+            {
+                while (data.Read())
+                {
+                    statuses.Add(new Status(data.GetInt32(0), data.GetString(1)));
+                }
+            }
+            data.Close();
+            return statuses;
         }
     }
 }

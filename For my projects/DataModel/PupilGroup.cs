@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace For_my_projects
 {
-    class PupilGroup
+    public class PupilGroup
     {
         int id;
         String litera;
