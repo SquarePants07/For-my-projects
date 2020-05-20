@@ -75,6 +75,7 @@
             // 
             this.PasswordInput.Location = new System.Drawing.Point(130, 51);
             this.PasswordInput.Name = "PasswordInput";
+            this.PasswordInput.PasswordChar = '*';
             this.PasswordInput.Size = new System.Drawing.Size(178, 20);
             this.PasswordInput.TabIndex = 3;
             this.PasswordInput.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PasswordInput_KeyPress);

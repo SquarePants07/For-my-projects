@@ -76,8 +76,17 @@ namespace For_my_projects
 
         private void PasswordInput_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == (char)Keys.Enter) {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
                 processLogin();
+            }
+            else {
+                char number = e.KeyChar;
+
+                if (!Char.IsDigit(number) && e.KeyChar != (char)Keys.Delete && e.KeyChar != (char)Keys.Back)
+                {
+                    e.Handled = true;
+                }
             }
         }
     }

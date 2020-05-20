@@ -19,7 +19,7 @@ namespace For_my_projects
         List<Question> questions;
         List<Status> statuses;
         int totalK;
-        int totalC;
+        double totalC;
         int N;
         PupilGroup group;
 
@@ -114,7 +114,7 @@ namespace For_my_projects
                         {
                             if (user.Id == userId)
                             {
-                                foreach (Answer userAnswer in results[currentUser])
+                                foreach (Answer userAnswer in results[user])
                                 {
                                     if (answer.QuestionId == userAnswer.QuestionId && userAnswer.contains(currentUser.Id))
                                     {
@@ -128,7 +128,7 @@ namespace For_my_projects
             }
             Reciprocity.Text = totalK + "";
 
-            totalC = totalK / (N * (N - 1) / 2);
+            totalC = (double)totalK / ((double)N * ((double)N - 1) / 2);
 
             Welfare.Text = totalC + "";
         }
@@ -181,7 +181,7 @@ namespace For_my_projects
             result += "|                     ФИО                     |         Статус         | Сдан тест |" + "\n";
             result += "|_____________________________________________|________________________|___________|" + "\n";
             foreach (User currentUser in results.Keys)
-            {
+            { 
                 result += "|";
                 result += currentUser.ToString();
                 int freeSpace = 45 - currentUser.ToString().Length;
